@@ -1,25 +1,21 @@
 package cuong.test.features;
 
 import net.serenitybdd.junit.runners.SerenityRunner;
+import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.abilities.BrowseTheWeb;
-import net.serenitybdd.screenplay.actions.Enter;
-import net.serenitybdd.screenplay.actions.SendKeys;
 import net.serenitybdd.screenplay.actors.OnStage;
 import net.serenitybdd.screenplay.actors.OnlineCast;
+import net.serenitybdd.screenplay.ensure.Ensure;
 import net.thucydides.core.annotations.Managed;
 import net.thucydides.core.annotations.Steps;
 import net.thucydides.core.annotations.WithTag;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
-import tasks.NavigateTo;
-import tasks.Pause;
-import tasks.SearchFor;
-import tasks.VerifyTheTermFound;
-import ui.DictionaryHomePage;
+import tasks.*;
 import ui.EntryPage;
+
 
 @RunWith(SerenityRunner.class)
 @WithTag("color:blue")
@@ -31,18 +27,23 @@ public class WhenSearchingForATermStory {
     @Steps
     NavigateTo navigateTo;
 
+    Actor bisllly = Actor.named("bisllly")
+            .whoCan(BrowseTheWeb.with(driver));
+
     @Before
     public void setup() {
-        OnStage.setTheStage(new OnlineCast());
-        OnStage.theActorCalled("Bisllly").can(BrowseTheWeb.with(driver));
+        bisllly.attemptsTo(
+            NavigateTo.url("https://www.oxfordlearnersdictionaries.com/")
+        );
     }
 
     @Test
     public void should_search_for_a_term() {
-        OnStage.theActorInTheSpotlight().attemptsTo(
-                NavigateTo.url("https://www.oxfordlearnersdictionaries.com/"),
+        bisllly.attemptsTo(
                 SearchFor.theTerm("brew"),
-                VerifyTheTermFound.byXpath("brew", EntryPage.XPATH_MODEL_FOR_LOCATING_THE_TERM)
+                VerifyThat.theResultAt(EntryPage.XPATH_MODEL_FOR_LOCATING_THE_TERM)
+                        .looksLike("brew")
+                        .execute()
         );
     }
 }
