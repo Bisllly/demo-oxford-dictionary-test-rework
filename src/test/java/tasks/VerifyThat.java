@@ -25,18 +25,14 @@ public class VerifyThat {
             this.xpath = target;
         }
 
-        public VerifyThatBuilder looksLike(String term) {
+        public Performable looksLike(String term) {
             this.term = term;
-            return this;
-        }
 
-        public Performable execute() {
-            return Task.where("ensure that " + term + " has appeared", actor -> {
-
+            return Task.where("{0} verifies that " + term + " exists", actor -> {
                 Target xpathModelWithText = xpath.of(term);
                 String actualValue = xpathModelWithText.resolveFor(actor).getText();
 
-                actor.attemptsTo (
+                actor.attemptsTo(
                     WaitUntil.the(xpathModelWithText, isCurrentlyVisible()),
                     Ensure.that(term).isEqualToIgnoringCase(actualValue)
                 );
@@ -44,5 +40,3 @@ public class VerifyThat {
         }
     }
 }
-
-

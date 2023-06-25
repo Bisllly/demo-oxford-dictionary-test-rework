@@ -43,7 +43,6 @@ public class WhenSearchingForATermStory {
                 SearchFor.theTerm("brew"),
                 VerifyThat.theResultAt(EntryPage.XPATH_MODEL_FOR_LOCATING_THE_TERM)
                         .looksLike("brew")
-                        .execute()
         );
     }
 }
