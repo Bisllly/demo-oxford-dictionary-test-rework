@@ -34,7 +34,8 @@ public class VerifyThat {
 
                 actor.attemptsTo(
                     WaitUntil.the(xpathModelWithText, isCurrentlyVisible()),
-                    Ensure.that(term).isEqualToIgnoringCase(actualValue)
+                    Ensure.that(term).isEqualToIgnoringCase(actualValue),
+                    Pause.forNumOfSeconds(5)
                 );
             });
         }

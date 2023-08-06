@@ -16,27 +16,22 @@ import org.openqa.selenium.WebDriver;
 import tasks.*;
 import ui.EntryPage;
 
-
 @RunWith(SerenityRunner.class)
 @WithTag("color:blue")
 public class WhenSearchingForATermStory {
-
     @Managed
     WebDriver driver;
-
     @Steps
     NavigateTo navigateTo;
-
     Actor bisllly = Actor.named("bisllly")
             .whoCan(BrowseTheWeb.with(driver));
-
     @Before
     public void setup() {
         bisllly.attemptsTo(
             NavigateTo.url("https://www.oxfordlearnersdictionaries.com/")
         );
     }
-
+    @WithTag("browserstack:remote")
     @Test
     public void should_search_for_a_term() {
         bisllly.attemptsTo(
