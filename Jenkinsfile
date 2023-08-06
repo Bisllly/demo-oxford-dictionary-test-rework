@@ -4,12 +4,12 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                powershell 'mvn clean package'
+                bat 'mvn clean package'
             }
         }
         stage('Test') {
             steps {
-                powershell 'mvn test'
+                bat 'mvn test'
             }
         }
     }
